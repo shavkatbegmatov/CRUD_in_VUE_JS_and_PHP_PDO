@@ -86,10 +86,13 @@
                         ajax.onreadystatechange = function () {
                             if (this.readyState == 4) {
                                 if (this.status == 200) {
-                                    console.log(this.responseText);
+                                    // console.log(this.responseText);
+                                    const user = JSON.parse(this.responseText);
+                                    // prepend in local array
+                                    self.users.unshift(user);
                                 }
                             }
-                        }
+                        };
                         const formData = new FormData(form);
                         ajax.send(formData);
                     }
