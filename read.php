@@ -1,7 +1,7 @@
 <?php
 
 // connect database
-$conn = new PDO("mysql:host=localhost:3306;dbname=test", "root", "");
+$conn = new PDO("mysql:host=localhost:3306;dbname=crud_in_vue_js_and_php_pdo", "root", "");
 // get all users from database sorted by latest first
 $sql = "SELECT * FROM users ORDER BY id DESC";
 $result = $conn->prepare($sql);
