@@ -12,4 +12,15 @@ $result->execute([
     // encrypt password in hash
     ":password" => password_hash($_POST["password"], PASSWORD_DEFAULT),
 ]);
-echo "Done";
+
+
+// get the latest record inserted
+$sql = "SELECT * FROM users WHERE id = :id";
+$result = $conn->prepare($sql);
+$result->execute(array(
+    ":id" => $conn->lastInsertId()
+));
+$data = $result->fetch();
+
+// send the newly inserted record back to AJAX
+echo json_encode($data);

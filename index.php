@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Bootstrap demo</title>
         <link rel="stylesheet" type="text/css" href="/public/assets/bootstrap/css/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="/public/assets/css/style.css" />
     </head>
     <body>
         <div id="myApp">
@@ -25,7 +26,7 @@
                                 <label>Password</label>
                                 <input type="password" name="password" class="form-control" />
                             </div>
-                            <input type="submit" value="Create User" class="btn btn-primary" />
+                            <input type="submit" value="Create User" class="btn btn-primary my" />
                         </form>
                     </div>
                 </div>
@@ -101,6 +102,3 @@
         </script>
     </body>
 </html>
-
-<?php
-echo "HGello";
