@@ -36,13 +36,51 @@
                         <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Reg. date</th>
+                        <th>Actions</th>
                     </tr>
                     <tr v-for="(user, index) in users">
                         <td v-text="user.id"></td>
                         <td v-text="user.name"></td>
                         <td v-text="user.email"></td>
+                        <td v-text="user.reg_date"></td>
+                        <td>
+                            <button type="button" v-bind:data-id="user.id" 
+                                v-on:click="showEditUserModal" class="btn btn-primary">Edit</button>
+                        </td>
                     </tr>
                 </table>
+            </div>
+            <!-- Modal -->
+            <div class="modal" id="editUserModal">
+                <div class="modal-dialog" role="document">
+                    <div class="model-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit User</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">x</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="update.php" v-on:submit.prevent="doUpdate" 
+                                id="form-edit-user" v-if="user != null">
+                                <input type="hidden" name="id" v-bind:value="user.id" />
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" name="name" v-bind:value="user.name" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" name="email" v-bind:value="user.email" class="form-control" />
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" name="submit" class="btn btn-primary" form="form-edit-user">Save changes</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <script src="/public/assets/vue.global.js"></script>
@@ -58,10 +96,22 @@
                 // },
                 data() {
                     return {
-                        users: []
+                        users: [],
+                        user: null
                     }
                 },
                 methods: {
+                    showEditUserModal: function () {
+                        const id event.target.getAttribute("data-id");
+                        // get user from local array and save in current object
+                        for (let a = 0; a < this.users.length; a++) {
+                            if (this.users[a].id == id) {
+                                this.user = this.users[a];
+                                break;
+                            }
+                        }
+                        $("#editUserModal").modal("show");
+                    },
                     // get all users from database
                     getData: function () {
                         const self = this;
