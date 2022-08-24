@@ -102,6 +102,7 @@
                 }
             },
             methods: {
+<<<<<<< HEAD
                 // update the user
                 doUpdate: function () {
                     const self = this;
@@ -163,6 +164,35 @@
                     const formData = new FormData();
                     ajax.send(formData);
                 },
+=======
+                showEditUserModal: function() {
+                    const id = event.target.getAttribute("data-id");
+                    // get user from local array and save in current object
+                    for (let a = 0; a < this.users.length; a++) {
+                        if (this.users[a].id == id) {
+                            this.user = this.users[a];
+                            break;
+                        }
+                    }
+                    $("#editUserModal").modal("show");
+                },
+                // get all users from database
+                getData: function() {
+                    const self = this;
+                    const ajax = new XMLHttpRequest();
+                    ajax.open("POST", "read.php", true);
+                    ajax.onreadystatechange = function() {
+                        if (this.readyState == 4) {
+                            if (this.status == 200) {
+                                const users = JSON.parse(this.responseText);
+                                self.users = users;
+                            }
+                        }
+                    };
+                    const formData = new FormData();
+                    ajax.send(formData);
+                },
+>>>>>>> 2aa1afa9dec2d4681ebc8d134b42d106892f093a
                 doCreate: function() {
                     const self = this;
                     const form = event.target;
