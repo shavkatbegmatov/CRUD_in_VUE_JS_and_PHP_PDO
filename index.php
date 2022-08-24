@@ -102,6 +102,67 @@
                 }
             },
             methods: {
+                // update the user
+                doUpdate: function () {
+                    const self = this;
+                    const form = event.target;
+                    const ajax = new XMLHttpRequest();
+                    ajax.open("POST", form.getAttribute("action"), true);
+                    ajax.onreadystatechange = function () {
+                        if (this.readyState == 4) {
+                            if (this.status == 200) {
+                                const user = JSON.parse(this.responseText);
+                                // update in local array
+                                // get index from local array
+                                let index = -1;
+                                for (let a = 0; a < self.users.length; a++) {
+                                    if (self.users[a].id == user.id) {
+                                        index = a;
+                                        break;
+                                    }
+                                }
+                                // create temporary array
+                                const tempUsers = self.users;
+                                // update in local temporary array
+                                tempUsers[index] = user;
+                                // update the local array by removing all old elements and interting the updated users
+                                self.users = [];
+                                self.users = tempUsers;
+                            }
+                        }
+                    };
+                    const formData = new FormData(form);
+                    ajax.send(formData);
+                    // hide the modal
+                    $("#editUserModal").modal("hide");
+                },
+                showEditUserModal: function() {
+                    const id = event.target.getAttribute("data-id");
+                    // get user from local array and save in current object
+                    for (let a = 0; a < this.users.length; a++) {
+                        if (this.users[a].id == id) {
+                            this.user = this.users[a];
+                            break;
+                        }
+                    }
+                    $("#editUserModal").modal("show");
+                },
+                // get all users from database
+                getData: function() {
+                    const self = this;
+                    const ajax = new XMLHttpRequest();
+                    ajax.open("POST", "read.php", true);
+                    ajax.onreadystatechange = function() {
+                        if (this.readyState == 4) {
+                            if (this.status == 200) {
+                                const users = JSON.parse(this.responseText);
+                                self.users = users;
+                            }
+                        }
+                    };
+                    const formData = new FormData();
+                    ajax.send(formData);
+                },
                 showEditUserModal: function() {
                     const id = event.target.getAttribute("data-id");
                     // get user from local array and save in current object
