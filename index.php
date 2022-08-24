@@ -102,7 +102,6 @@
                 }
             },
             methods: {
-<<<<<<< HEAD
                 // update the user
                 doUpdate: function () {
                     const self = this;
@@ -164,7 +163,6 @@
                     const formData = new FormData();
                     ajax.send(formData);
                 },
-=======
                 showEditUserModal: function() {
                     const id = event.target.getAttribute("data-id");
                     // get user from local array and save in current object
@@ -192,7 +190,6 @@
                     const formData = new FormData();
                     ajax.send(formData);
                 },
->>>>>>> 2aa1afa9dec2d4681ebc8d134b42d106892f093a
                 doCreate: function() {
                     const self = this;
                     const form = event.target;
