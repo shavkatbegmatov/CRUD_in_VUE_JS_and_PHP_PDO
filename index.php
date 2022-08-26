@@ -111,6 +111,7 @@
                     ajax.onreadystatechange = function () {
                         if (this.readyState == 4) {
                             if (this.status == 200) {
+                                console.log(this.responseText);
                                 const user = JSON.parse(this.responseText);
                                 // update in local array
                                 // get index from local array
