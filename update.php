@@ -23,16 +23,3 @@ $data = $result->fetch();
 
 // send the updated record back to AJAX
 echo json_encode($data);
-
-
-
-
-
-
-
-
-
-$data = $result->fetchAll();
-
-// send all records fetched back to AJAX
-echo json_encode($data);
