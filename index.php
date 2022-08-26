@@ -174,7 +174,7 @@
                     }
                     $("#editUserModal").modal("show");
                 },
-                // get all users from database
+                // get all users from database (this for test 2022.08.26)
                 getData: function() {
                     const self = this;
                     const ajax = new XMLHttpRequest();
