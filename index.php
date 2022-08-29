@@ -48,6 +48,11 @@
                     <td v-text="user.reg_date"></td>
                     <td>
                         <button type="button" v-bind:data-id="user.id" v-on:click="showEditUserModal" class="btn btn-primary">Edit</button>
+                        <form method="POST" action="delete" v-on:submit.prevent="doDelete" style="display:content;">
+                            <input type="hidden" name="id" v-bind:value="user.id" />
+                            <input type="submit" name="submit" class="btn btn-danger" value="Delete" />
+                            <font-awesome-icon icon="fa-solid fa-trash-can" />
+                        </form>
                     </td>
                 </tr>
             </table>
@@ -103,12 +108,12 @@
             },
             methods: {
                 // update the user 2022.08.25
-                doUpdate: function () {
+                doUpdate: function() {
                     const self = this;
                     const form = event.target;
                     const ajax = new XMLHttpRequest();
                     ajax.open("POST", form.getAttribute("action"), true);
-                    ajax.onreadystatechange = function () {
+                    ajax.onreadystatechange = function() {
                         if (this.readyState == 4) {
                             if (this.status == 200) {
                                 console.log(this.responseText);
