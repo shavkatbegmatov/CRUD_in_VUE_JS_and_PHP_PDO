@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>English Tests</title>
     <link rel="stylesheet" type="text/css" href="/public/assets/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/public/assets/fontawesome-free-6.1.2-web/css/all.css" />
     <link rel="stylesheet" type="text/css" href="/public/assets/css/style.css" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
 </head>
 
 <body>
@@ -33,7 +36,7 @@
                 </div>
             </div>
             <h1 class="text-center">Read</h1>
-            <table class="table">
+            <table class="table table-hover shavkat-table">
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
@@ -47,15 +50,20 @@
                     <td v-text="user.email"></td>
                     <td v-text="user.reg_date"></td>
                     <td>
-                        <button type="button" v-bind:data-id="user.id" v-on:click="showEditUserModal" class="btn btn-primary">Edit</button>
-                        <form method="POST" action="delete" v-on:submit.prevent="doDelete" style="display:content;">
+                        <button type="button" v-bind:data-id="user.id" v-on:click="showEditUserModal" class="btn btn-primary"><i class="fa-solid fa-pen"></i></button>
+                        <form method="POST" action="delete.php" v-on:submit.prevent="doDelete" style="display:contents;">
                             <input type="hidden" name="id" v-bind:value="user.id" />
-                            <input type="submit" name="submit" class="btn btn-danger" value="Delete" />
-                            <font-awesome-icon icon="fa-solid fa-trash-can" />
+                            <button type="submit" name="submit" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
                         </form>
                     </td>
                 </tr>
             </table>
+            <ul class="fa-ul">
+                <li><i class="fa-li fa fa-check-square"></i>Иконки списков</li>
+                <li><i class="fa-li fa fa-check-square"></i>могут быть использованы</li>
+                <li><i class="fa-li fa fa-spinner fa-spin"></i>как маркеры</li>
+                <li><i class="fa-li fa fa-square"></i>в списках</li>
+            </ul>
         </div>
         <!-- Modal -->
         <div class="modal fade" tabindex="-1" aria-labelledby="User Edit" aria-hidden="true" data-bs-backdrop="static" id="editUserModal">
@@ -70,7 +78,7 @@
                             <input type="hidden" name="id" v-bind:value="user.id" />
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" name="name" v-bind:value="user.name" class="form-control" />
+                                <input type="text" name="name" v-bind:value="user.name" class="form-control" autofocus />
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
@@ -107,6 +115,28 @@
                 }
             },
             methods: {
+                // delete user
+                doDelete: function () {
+                    const self = this;
+                    const form = event.target;
+                    const ajax = new XMLHttpRequest();
+                    ajax.open("POST", form.getAttribute("action"), true);
+                    ajax.onreadystatechange = function () {
+                        if (this.readyState == 4) {
+                            if (this.status == 200) {
+                                // remove from local array
+                                for (let a = 0; a < self.users.length; a++) {
+                                    if (self.users[a].id == form.id.value) {
+                                        self.users.splice(a, 1);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    };
+                    const formData = new FormData(form);
+                    ajax.send(formData);
+                },
                 // update the user 2022.08.25
                 doUpdate: function() {
                     const self = this;

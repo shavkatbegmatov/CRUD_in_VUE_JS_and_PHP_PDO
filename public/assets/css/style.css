@@ -8,3 +8,9 @@
 .my {
 	margin-top: 15px;
 }
+button {
+	margin: 5px;
+}
+.shavkat-table td {
+	vertical-align: middle;
+}
